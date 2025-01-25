@@ -34,8 +34,8 @@ export default function Home() {
                 />
               </div>
               <Button className="h-11 px-8">
-                Start Writing - Free
-                <ArrowRight className="ml-2 h-4 w-4" />
+                Start Writing
+                <ArrowRight className="h-4 w-4" />
               </Button>
             </div>
           </div>
