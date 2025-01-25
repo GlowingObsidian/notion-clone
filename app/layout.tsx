@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Inter } from "next/font/google";
+import ConvexProvider from "./components/providers/ConvexProvider";
 
 export const metadata: Metadata = {
   title: "Notate",
@@ -16,7 +17,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} antialiased`}>{children}</body>
+      <body className={`${inter.className} antialiased`}>
+        <ConvexProvider>{children}</ConvexProvider>
+      </body>
     </html>
   );
 }
