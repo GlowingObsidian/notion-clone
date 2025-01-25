@@ -1,14 +1,16 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { DropdownMenuContent } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenuContent,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
 import { SignOutButton, useUser } from "@clerk/clerk-react";
-import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@radix-ui/react-dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 import { ChevronsLeftRight } from "lucide-react";
 
 function UserItem() {
@@ -23,7 +25,7 @@ function UserItem() {
         >
           <div className="gap-x-2 flex items-center max-w-[150px]">
             <Avatar className="h-6 w-6">
-              <AvatarImage src={user?.imageUrl} className="rounded-full" />
+              <AvatarImage src={user?.imageUrl} />
             </Avatar>
             <span className="text-start font-medium line-clamp-1">
               {user?.firstName}&apos;s Notate
@@ -41,8 +43,8 @@ function UserItem() {
         <div className="flex flex-col space-y-4 p-2">
           <div className="flex items-center gap-x-2">
             <div className="rounded-md bg-secondary p-1">
-              <Avatar>
-                <AvatarImage src={user?.imageUrl} className="h-8 w-8" />
+              <Avatar className="h-8 w-8">
+                <AvatarImage src={user?.imageUrl} />
               </Avatar>
             </div>
             <div className="space-y-1">
@@ -53,13 +55,12 @@ function UserItem() {
             </div>
           </div>
         </div>
-        <hr></hr>
-        <DropdownMenuItem className="w-full cursor-pointer text-start text-muted-foreground">
-          <SignOutButton>
-            <Button variant="ghost" className="my-1">
-              Log Out
-            </Button>
-          </SignOutButton>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem
+          className="w-full cursor-pointer text-start text-muted-foreground"
+          asChild
+        >
+          <SignOutButton>Log Out</SignOutButton>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
