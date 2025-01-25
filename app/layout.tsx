@@ -21,7 +21,7 @@ export default function RootLayout({
       <body className={`${inter.className} antialiased`}>
         <ConvexProvider>
           {children}
-          <Toaster position="bottom-center" />
+          <Toaster position="bottom-right" />
         </ConvexProvider>
       </body>
     </html>
