@@ -1,13 +1,21 @@
 import { cn } from "@/lib/utils";
-import { ArrowLeftToLine, Sidebar } from "lucide-react";
+import { ArrowLeftToLine, PlusCircle, Sidebar } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { ElementRef, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import UserItem from "./UserItem";
+import { useMutation, useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import Item from "./Item";
+import { toast } from "sonner";
 
 function Navigation() {
   const pathname = usePathname();
   const isMobile = useMediaQuery("(max-width: 768px)");
+
+  const documents = useQuery(api.documents.get);
+  const create = useMutation(api.documents.create);
+
   const isResizingRef = useRef(false);
   const sidebarRef = useRef<ElementRef<"aside">>(null);
   const navRef = useRef<ElementRef<"nav">>(null);
@@ -88,6 +96,16 @@ function Navigation() {
     }
   };
 
+  const handleCreate = () => {
+    const promise = create({ title: "New note" });
+
+    toast.promise(promise, {
+      loading: "Creating new note...",
+      success: "New note created successfully!",
+      error: "Failed to create new note",
+    });
+  };
+
   return (
     <>
       <aside
@@ -110,8 +128,17 @@ function Navigation() {
         </div>
         <div>
           <UserItem />
+          <Item
+            onClick={handleCreate}
+            label="Create new note"
+            icon={PlusCircle}
+          />
         </div>
-        <div>Documents</div>
+        <div>
+          {documents?.map((document) => (
+            <p key={document._id}>{document.title}</p>
+          ))}
+        </div>
         <div
           className="opacity-0 group-hover/sidebar:opacity-100 transition cursor-ew-resize absolute h-screen w-1 bg-primary/10 right-0 top-0"
           onMouseDown={handleMouseDown}
