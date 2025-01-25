@@ -3,6 +3,7 @@ import { ArrowLeftToLine, Sidebar } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { ElementRef, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
+import UserItem from "./UserItem";
 
 function Navigation() {
   const pathname = usePathname();
@@ -107,7 +108,9 @@ function Navigation() {
         >
           <ArrowLeftToLine className="h-6 w-6" />
         </div>
-        <div>Action Items</div>
+        <div>
+          <UserItem />
+        </div>
         <div>Documents</div>
         <div
           className="opacity-0 group-hover/sidebar:opacity-100 transition cursor-ew-resize absolute h-screen w-1 bg-primary/10 right-0 top-0"

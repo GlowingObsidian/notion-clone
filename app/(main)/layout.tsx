@@ -24,7 +24,7 @@ export default function MainLayout({
   return (
     <div className="h-screen flex">
       <Navigation />
-      <main className="flex-1 h-screen overflow-y-auto">{children}</main>
+      <main className="flex-1 overflow-y-auto">{children}</main>
     </div>
   );
 }
