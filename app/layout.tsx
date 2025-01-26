@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import ConvexProvider from "./components/providers/ConvexProvider";
 import { Toaster } from "@/components/ui/sonner";
 import { ModalProvider } from "./components/providers/ModalProvider";
+import { EdgeStoreProvider } from "@/lib/edgestore";
 
 export const metadata: Metadata = {
   title: "Notate",
@@ -21,9 +22,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
         <ConvexProvider>
-          {children}
-          <Toaster position="bottom-right" />
-          <ModalProvider />
+          <EdgeStoreProvider>
+            {children}
+            <Toaster position="bottom-right" />
+            <ModalProvider />
+          </EdgeStoreProvider>
         </ConvexProvider>
       </body>
     </html>

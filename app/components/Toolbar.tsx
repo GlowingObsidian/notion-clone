@@ -8,6 +8,7 @@ import { ElementRef, useRef, useState } from "react";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import TextareaAutoSize from "react-textarea-autosize";
+import { useCoverImage } from "@/hooks/use-cover-image";
 
 function Toolbar({
   initialData,
@@ -22,6 +23,8 @@ function Toolbar({
 
   const update = useMutation(api.documents.update);
   const removeIcon = useMutation(api.documents.removeIcon);
+
+  const coverImage = useCoverImage();
 
   const enableInput = () => {
     if (preview) return;
@@ -94,7 +97,7 @@ function Toolbar({
         )}
         {!initialData.coverImage && !preview && (
           <Button
-            onClick={() => {}}
+            onClick={coverImage.onOpen}
             className="text-muted-foregroup text-xs"
             variant="outline"
             size="sm"
