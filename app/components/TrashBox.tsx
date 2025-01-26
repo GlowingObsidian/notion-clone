@@ -32,7 +32,7 @@ function TrashBox() {
     toast.promise(promise, {
       loading: "Restoring page....",
       success: "Page restored successfully!",
-      error: "Failed to restore page.",
+      error: "Failed to restore page",
     });
   };
 
@@ -42,7 +42,7 @@ function TrashBox() {
     toast.promise(promise, {
       loading: "Deleting page....",
       success: "Page deleted successfully!",
-      error: "Failed to delete page.",
+      error: "Failed to delete page",
     });
 
     if (params.documentId === documentId) router.push(`/dashboard`);
