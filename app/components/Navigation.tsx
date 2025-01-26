@@ -1,33 +1,34 @@
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { api } from "@/convex/_generated/api";
+import { useSearch } from "@/hooks/use-search";
+import { useSettings } from "@/hooks/use-settings";
 import { cn } from "@/lib/utils";
+import { useMutation } from "convex/react";
 import {
   ArrowLeftToLine,
-  BookOpen,
   PlusCircle,
   Search,
   Settings,
   Sidebar,
   Trash,
 } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { ElementRef, useEffect, useRef, useState } from "react";
-import { useMediaQuery } from "usehooks-ts";
-import UserItem from "./UserItem";
-import { useMutation, useQuery } from "convex/react";
-import { api } from "@/convex/_generated/api";
-import Item from "./Item";
 import { toast } from "sonner";
+import { useMediaQuery } from "usehooks-ts";
 import DocumentList from "./DocumentList";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import Item from "./Item";
 import TrashBox from "./TrashBox";
-import { useSearch } from "@/hooks/use-search";
-import { useSettings } from "@/hooks/use-settings";
+import UserItem from "./UserItem";
+import Navbar from "../(main)/dashboard/[documentId]/Navbar";
 
 function Navigation() {
   const pathname = usePathname();
+  const params = useParams();
   const isMobile = useMediaQuery("(max-width: 768px)");
   const search = useSearch();
   const settings = useSettings();
@@ -183,15 +184,19 @@ function Navigation() {
           isMobile && "left-0 w-full"
         )}
       >
-        <div className="bg-transparent px-3 py-2 w-full">
-          {isCollapsed && (
-            <Sidebar
-              role="button"
-              className="h-6 w-6 text-muted-foreground"
-              onClick={resetWidth}
-            />
-          )}
-        </div>
+        {!!params.documentId ? (
+          <Navbar isCollapsed={isCollapsed} onResetWidth={resetWidth} />
+        ) : (
+          <div className="bg-transparent px-3 py-2 w-full">
+            {isCollapsed && (
+              <Sidebar
+                role="button"
+                className="h-6 w-6 text-muted-foreground"
+                onClick={resetWidth}
+              />
+            )}
+          </div>
+        )}
       </nav>
     </>
   );
