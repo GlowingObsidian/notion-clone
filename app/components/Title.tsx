@@ -38,7 +38,7 @@ function Title({ initialData }: { initialData: Doc<"documents"> }) {
   return (
     <div className="flex items-center gap-x-1">
       {!!initialData.icon && <p>{initialData.icon}</p>}
-      {isEditing ? (
+      {!initialData.isArchived && isEditing ? (
         <Input
           ref={inputRef}
           onClick={enableInput}
@@ -48,6 +48,15 @@ function Title({ initialData }: { initialData: Doc<"documents"> }) {
           value={title}
           className="h-7 px-2 focus-visible:ring-transparent"
         />
+      ) : initialData.isArchived ? (
+        <Button
+          variant="ghost"
+          size="sm"
+          className="font-normal h-auto p-1"
+          disabled
+        >
+          <span className="truncate"> {initialData.title}</span>
+        </Button>
       ) : (
         <Button
           onClick={enableInput}
