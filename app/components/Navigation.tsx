@@ -95,7 +95,8 @@ function Navigation() {
         "width",
         isMobile ? "0" : `calc(100% - 240px)`
       );
-      navRef.current.style.setProperty("left", isMobile ? "100%" : "240px");
+      // if (isMobile) navRef.current.style.display = "none";
+      navRef.current.style.setProperty("left", isMobile ? "0" : "240px");
       setTimeout(() => {
         setIsResetting(false);
       }, 300);
@@ -179,7 +180,7 @@ function Navigation() {
       <nav
         ref={navRef}
         className={cn(
-          "absolute top-0 z-[99999] left-60 w-[calc(100%-240px)]",
+          "absolute top-0 z-[99998] left-60 w-[calc(100%-240px)]",
           isResetting && "transition-all ease-in-out duration-300",
           isMobile && "left-0 w-full"
         )}
