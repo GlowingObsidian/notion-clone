@@ -13,13 +13,13 @@ function Dashboard() {
   const { user } = useUser();
   const create = useMutation(api.documents.create);
 
-  const createNewNote = () => {
-    const promise = create({ title: "New Note" });
+  const createPage = () => {
+    const promise = create({ title: "New page" });
 
     toast.promise(promise, {
-      loading: "Creating note...",
-      success: "New note created successfully",
-      error: "Failed to create a new note",
+      loading: "Creating page...",
+      success: "New page created successfully",
+      error: "Failed to create a new page",
     });
   };
 
@@ -29,7 +29,7 @@ function Dashboard() {
       <h2 className="text-lg font-medium">
         Welcome to {user?.firstName}&apos;s Notate.
       </h2>
-      <Button onClick={createNewNote}>
+      <Button onClick={createPage}>
         <PlusCircle className="h-4 w-4 mr-2" />
         Create a new note
       </Button>

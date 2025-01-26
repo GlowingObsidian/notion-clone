@@ -1,5 +1,13 @@
 import { cn } from "@/lib/utils";
-import { ArrowLeftToLine, PlusCircle, Sidebar } from "lucide-react";
+import {
+  ArrowLeftToLine,
+  BookOpen,
+  PlusCircle,
+  Search,
+  Settings,
+  Sidebar,
+  Trash,
+} from "lucide-react";
 import { usePathname } from "next/navigation";
 import { ElementRef, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
@@ -8,12 +16,18 @@ import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import Item from "./Item";
 import { toast } from "sonner";
+import DocumentList from "./DocumentList";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import TrashBox from "./TrashBox";
 
 function Navigation() {
   const pathname = usePathname();
   const isMobile = useMediaQuery("(max-width: 768px)");
 
-  const documents = useQuery(api.documents.get);
   const create = useMutation(api.documents.create);
 
   const isResizingRef = useRef(false);
@@ -97,12 +111,12 @@ function Navigation() {
   };
 
   const handleCreate = () => {
-    const promise = create({ title: "New note" });
+    const promise = create({ title: "New page" });
 
     toast.promise(promise, {
-      loading: "Creating new note...",
-      success: "New note created successfully!",
-      error: "Failed to create new note",
+      loading: "Creating new page...",
+      success: "New page created successfully!",
+      error: "Failed to create new page",
     });
   };
 
@@ -128,16 +142,28 @@ function Navigation() {
         </div>
         <div>
           <UserItem />
+          <Item label="Search" icon={Search} search onClick={() => {}} />
+          <Item label="Settings" icon={Settings} onClick={() => {}} />
           <Item
             onClick={handleCreate}
             label="Create new note"
             icon={PlusCircle}
           />
         </div>
-        <div>
-          {documents?.map((document) => (
-            <p key={document._id}>{document.title}</p>
-          ))}
+        <div className="mt-4">
+          <p className="p-3 text-xs text-muted-foreground">My Pages</p>
+          <DocumentList />
+          <Popover>
+            <PopoverTrigger className="w-full mt-4">
+              <Item label="Trash" icon={Trash} onClick={() => {}} />
+            </PopoverTrigger>
+            <PopoverContent
+              side={isMobile ? "bottom" : "right"}
+              className="p-0"
+            >
+              <TrashBox />
+            </PopoverContent>
+          </Popover>
         </div>
         <div
           className="opacity-0 group-hover/sidebar:opacity-100 transition cursor-ew-resize absolute h-screen w-1 bg-primary/10 right-0 top-0"
