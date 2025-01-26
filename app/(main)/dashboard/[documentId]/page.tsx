@@ -1,16 +1,25 @@
 "use client";
 
 import Cover from "@/app/components/Cover";
+import Editor from "@/app/components/Editor";
 import Toolbar from "@/app/components/Toolbar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
-import { useQuery } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 
 function Page({ params }: { params: { documentId: Id<"documents"> } }) {
   const document = useQuery(api.documents.getById, {
     documentId: params.documentId,
   });
+
+  const update = useMutation(api.documents.update);
+
+  const onChange = (content: string) =>
+    update({
+      id: params.documentId,
+      content: content,
+    });
 
   if (document === undefined)
     return (
@@ -30,8 +39,9 @@ function Page({ params }: { params: { documentId: Id<"documents"> } }) {
   return (
     <div className="pb-40">
       <Cover image={document.coverImage} />
-      <div className="md:max-w-3xl lg:max-w-4xl mx-auto">
+      <div className="md:max-w-3xl lg:max-w-4xl mx-auto space-y-5">
         <Toolbar initialData={document} />
+        <Editor onChange={onChange} initialContent={document.content} />
       </div>
     </div>
   );
