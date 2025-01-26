@@ -62,7 +62,7 @@ function Item({
   const archivePage = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (!id) return;
-    const promise = archive({ id });
+    const promise = archive({ id }).then(() => router.push("/dashboard"));
 
     toast.promise(promise, {
       loading: "Moving to trash...",
@@ -80,7 +80,7 @@ function Item({
         if (!expanded) {
           onExpand?.();
         }
-        // router.push(`/dashboard/${documentId}`)
+        router.push(`/dashboard/${documentId}`);
 
         toast.promise(promise, {
           loading: "Creating page...",

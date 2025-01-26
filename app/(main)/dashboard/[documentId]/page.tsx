@@ -1,14 +1,19 @@
 "use client";
 
 import Cover from "@/app/components/Cover";
-import Editor from "@/app/components/Editor";
 import Toolbar from "@/app/components/Toolbar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useMutation, useQuery } from "convex/react";
+import dynamic from "next/dynamic";
+import { useMemo } from "react";
 
 function Page({ params }: { params: { documentId: Id<"documents"> } }) {
+  const Editor = useMemo(
+    () => dynamic(() => import("@/app/components/Editor")),
+    []
+  );
   const document = useQuery(api.documents.getById, {
     documentId: params.documentId,
   });

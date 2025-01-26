@@ -25,9 +25,11 @@ import Item from "./Item";
 import TrashBox from "./TrashBox";
 import UserItem from "./UserItem";
 import Navbar from "../(main)/dashboard/[documentId]/Navbar";
+import { useRouter } from "next/navigation";
 
 function Navigation() {
   const pathname = usePathname();
+  const router = useRouter();
   const params = useParams();
   const isMobile = useMediaQuery("(max-width: 768px)");
   const search = useSearch();
@@ -95,7 +97,6 @@ function Navigation() {
         "width",
         isMobile ? "0" : `calc(100% - 240px)`
       );
-      // if (isMobile) navRef.current.style.display = "none";
       navRef.current.style.setProperty("left", isMobile ? "0" : "240px");
       setTimeout(() => {
         setIsResetting(false);
@@ -117,7 +118,9 @@ function Navigation() {
   };
 
   const handleCreate = () => {
-    const promise = create({ title: "New page" });
+    const promise = create({ title: "New page" }).then((documentId: string) =>
+      router.push(`/dashboard/${documentId}`)
+    );
 
     toast.promise(promise, {
       loading: "Creating new page...",

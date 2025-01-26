@@ -7,14 +7,18 @@ import { useUser } from "@clerk/clerk-react";
 import { useMutation } from "convex/react";
 import { PlusCircle } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 function Dashboard() {
   const { user } = useUser();
+  const router = useRouter();
   const create = useMutation(api.documents.create);
 
   const createPage = () => {
-    const promise = create({ title: "New page" });
+    const promise = create({ title: "New page" }).then((newDocument) =>
+      router.push(`/dashboard/${newDocument}`)
+    );
 
     toast.promise(promise, {
       loading: "Creating page...",
