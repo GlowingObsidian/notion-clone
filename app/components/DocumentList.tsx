@@ -33,12 +33,16 @@ function DocumentList({ parentDocumentId, level = 0 }: DocumentListProps) {
   const onRedirect = (documentId: string) =>
     router.push(`/dashboard/${documentId}`);
 
-  if (documents === undefined) return <Item.Skeleton level={level} />;
-  {
-    level === 0 && (
+  if (documents === undefined) {
+    return (
       <>
         <Item.Skeleton level={level} />
-        <Item.Skeleton level={level} />
+        {level === 0 && (
+          <>
+            <Item.Skeleton level={level} />
+            <Item.Skeleton level={level} />
+          </>
+        )}
       </>
     );
   }

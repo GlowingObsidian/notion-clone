@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
-import { useUser } from "@clerk/clerk-react";
 import { useMutation } from "convex/react";
 import { MoreHorizontal, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -17,7 +16,6 @@ import { toast } from "sonner";
 
 function Menu({ documentId }: { documentId: Id<"documents"> }) {
   const router = useRouter();
-  const { user } = useUser();
   const archive = useMutation(api.documents.archive);
 
   const onArchive = (e: React.MouseEvent) => {

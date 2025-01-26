@@ -18,7 +18,7 @@ function Settings() {
             <Label>Apperance</Label>
           </div>
           <span className="text-[0.8rem] text-muted-foreground">
-            Set Notate's apperance
+            Set Notate&apos;s apperance
           </span>
         </div>
       </DialogContent>

@@ -1,9 +1,9 @@
-import "@blocknote/core/fonts/inter.css";
+import { useEdgeStore } from "@/lib/edgestore";
 import { BlockNoteEditor, PartialBlock } from "@blocknote/core";
-import { useCreateBlockNote, BlockNoteViewRaw } from "@blocknote/react";
+import "@blocknote/core/fonts/inter.css";
 import { BlockNoteView } from "@blocknote/mantine";
 import "@blocknote/mantine/style.css";
-import { useEdgeStore } from "@/lib/edgestore";
+import { useCreateBlockNote } from "@blocknote/react";
 
 function Editor({
   onChange,
