@@ -43,10 +43,14 @@ function Page({ params }: { params: { documentId: Id<"documents"> } }) {
   if (document === null) return <p>Not Found</p>;
   return (
     <div className="pb-40">
-      <Cover image={document.coverImage} />
+      <Cover image={document.coverImage} preview={document.isArchived} />
       <div className="md:max-w-3xl lg:max-w-4xl mx-auto space-y-5">
-        <Toolbar initialData={document} />
-        <Editor onChange={onChange} initialContent={document.content} />
+        <Toolbar initialData={document} preview={document.isArchived} />
+        <Editor
+          onChange={onChange}
+          initialContent={document.content}
+          editable={!document.isArchived}
+        />
       </div>
     </div>
   );
