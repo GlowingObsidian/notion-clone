@@ -18,7 +18,7 @@ function Menu({ documentId }: { documentId: Id<"documents"> }) {
   const router = useRouter();
   const archive = useMutation(api.documents.archive);
 
-  const onArchive = (e: React.MouseEvent) => {
+  const onArchive = () => {
     const promise = archive({ id: documentId });
 
     toast.promise(promise, {
