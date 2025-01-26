@@ -3,6 +3,7 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import ConvexProvider from "./components/providers/ConvexProvider";
 import { Toaster } from "@/components/ui/sonner";
+import { ModalProvider } from "./components/providers/ModalProvider";
 
 export const metadata: Metadata = {
   title: "Notate",
@@ -22,6 +23,7 @@ export default function RootLayout({
         <ConvexProvider>
           {children}
           <Toaster position="bottom-right" />
+          <ModalProvider />
         </ConvexProvider>
       </body>
     </html>
