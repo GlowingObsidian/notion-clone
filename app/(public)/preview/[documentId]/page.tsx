@@ -7,18 +7,22 @@ import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useQuery } from "convex/react";
 import dynamic from "next/dynamic";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 
 function Page({ params }: { params: { documentId: Id<"documents"> } }) {
   const Editor = useMemo(
     () => dynamic(() => import("@/app/components/Editor")),
     []
   );
-  const document = useQuery(api.documents.getById, {
+  const page = useQuery(api.documents.getById, {
     documentId: params.documentId,
   });
 
-  if (document === undefined)
+  useEffect(() => {
+    if (page) document.title = page.title;
+  }, [page]);
+
+  if (page === undefined)
     return (
       <div>
         <Cover.Skeleton />
@@ -32,15 +36,17 @@ function Page({ params }: { params: { documentId: Id<"documents"> } }) {
         </div>
       </div>
     );
-  if (document === null || !document.isPublished) throw new Error();
+
+  if (page === null || !page.isPublished) throw new Error();
+
   return (
     <div className="pb-40">
-      <Cover image={document.coverImage} preview />
+      <Cover image={page.coverImage} preview />
       <div className="md:max-w-3xl lg:max-w-4xl mx-auto space-y-5">
-        <Toolbar initialData={document} preview />
+        <Toolbar initialData={page} preview />
         <Editor
           onChange={() => {}}
-          initialContent={document.content}
+          initialContent={page.content}
           editable={false}
         />
       </div>

@@ -7,18 +7,22 @@ import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useMutation, useQuery } from "convex/react";
 import dynamic from "next/dynamic";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 
 function Page({ params }: { params: { documentId: Id<"documents"> } }) {
   const Editor = useMemo(
     () => dynamic(() => import("@/app/components/Editor")),
     []
   );
-  const document = useQuery(api.documents.getById, {
+  const page = useQuery(api.documents.getById, {
     documentId: params.documentId,
   });
 
   const update = useMutation(api.documents.update);
+
+  useEffect(() => {
+    if (page) document.title = page.title;
+  }, [page]);
 
   const onChange = (content: string) =>
     update({
@@ -26,7 +30,7 @@ function Page({ params }: { params: { documentId: Id<"documents"> } }) {
       content: content,
     });
 
-  if (document === undefined)
+  if (page === undefined)
     return (
       <div>
         <Cover.Skeleton />
@@ -40,16 +44,16 @@ function Page({ params }: { params: { documentId: Id<"documents"> } }) {
         </div>
       </div>
     );
-  if (document === null) return <p>Not Found</p>;
+  if (page === null) return <p>Not Found</p>;
   return (
     <div className="pb-40">
-      <Cover image={document.coverImage} preview={document.isArchived} />
+      <Cover image={page.coverImage} preview={page.isArchived} />
       <div className="md:max-w-3xl lg:max-w-4xl mx-auto space-y-5">
-        <Toolbar initialData={document} preview={document.isArchived} />
+        <Toolbar initialData={page} preview={page.isArchived} />
         <Editor
           onChange={onChange}
-          initialContent={document.content}
-          editable={!document.isArchived}
+          initialContent={page.content}
+          editable={!page.isArchived}
         />
       </div>
     </div>
